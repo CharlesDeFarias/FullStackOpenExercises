@@ -24,13 +24,11 @@ const App = () => {
   const Header = ({courseTitle}) => <h1>{courseTitle}</h1>
 
   const Content = ({parts}) => {
-    console.log(parts)
+    const Part = ({number, title, count}) => <li key={number}> Part: {number} - {title} - Exercises: {count}</li>
+
     return (
       <>
-        <h3>Parts:</h3>
-        <ul>
-          {parts.map((part) => <li key={part.number}> Part: {part.number} - {part.title} - Exercises: {part.exerciseCount}</li>)}
-        </ul>
+          {parts.map((part) => <Part key={part.number} number={part.number} title={part.title} count={part.exerciseCount} />)}
       </>
     )
   }
