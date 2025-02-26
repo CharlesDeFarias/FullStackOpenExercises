@@ -50,6 +50,8 @@ const App = () => {
       <span>has {votes} votes</span>
       <button onClick={handleAnecdoteClick}>Feed me another anecdote</button>
       <button onClick={handleVoteClick}>Vote for this anecdote</button>
+      <h3>Anecdote with most votes</h3>
+      <p>{anecdotes.reduce((a, b) => a.votes > b.votes ? a : b).anecdote}</p>
     </div>
   )
 }
