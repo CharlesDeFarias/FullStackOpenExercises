@@ -11,7 +11,10 @@ const StatisticsLine = ({stat, value}) => {
   }
 
   return (
-      <li key={value}>{stat}: {value}</li>
+    <tr>
+      <td>{stat}</td>
+      <td>{value}</td>
+    </tr>
     )
 }
 
@@ -38,7 +41,11 @@ const Statistics = ({votes}) => {
     return (
     <>
       <h2>Statistics</h2>
-      {keys.map((key) => <StatisticsLine key={key} stat={key} value={values[key]} />)}
+      <table>
+        <tbody>
+          {keys.map((key) => <StatisticsLine key={key} stat={key} value={values[key]} />)}
+        </tbody>
+      </table>
     </>
     )}else{
     return (
