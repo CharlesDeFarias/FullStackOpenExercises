@@ -2,9 +2,11 @@
 // Header takes care of rendering the name of the course, 
 // Content renders the parts and their number of exercises and 
 // Total renders the total number of exercises.
+import Course from './components/Course'
+
 const App = () => {
  
-  const course ={
+  const courses =[{
     title: 'Half Stack application development',
     parts: [{
       number: 1,
@@ -19,32 +21,14 @@ const App = () => {
       title: 'State of a component',
       exerciseCount: 14
       }],
-  }
+  },]
 
-  const Header = ({courseTitle}) => <h1>{courseTitle}</h1>
-
-  const Content = ({parts}) => {
-    const Part = ({number, title, count}) => <li key={number}> Part: {number} - {title} - Exercises: {count}</li>
-
-    return (
-      <>
-          {parts.map((part) => <Part key={part.number} number={part.number} title={part.title} count={part.exerciseCount} />)}
-      </>
-    )
-  }
-
-  const Total = ({parts}) => {
-    return (
-      <p>Total number of exercises: {parts.reduce((acc, part) => acc + part.exerciseCount, 0)}</p>
-    )
-  }
-  console.log(course.title)
 
   return (
     <div>
-      <Header courseTitle={course.title} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts} />
+    {courses.map((course) => (
+      <Course key={course.title} course={course} />
+    ))}
     </div>
   )
 }
