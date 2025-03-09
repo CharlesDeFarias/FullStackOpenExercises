@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import Phonebook from './components/Phonebook.jsx'
-// import { getAll, create, update } from './services/server.js'
-import axios from 'axios'
+import { getAll, createPerson } from './services/persons.js'
 
 const App = () => {
   
@@ -9,21 +8,17 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [newFilter, setNewFilter] = useState('');
   const [persons, setPersons] = useState([ ]) 
-  
-  
 
   useEffect(() => {
-    console.log('effect')
-    axios
-    .get('http://localhost:3001/persons')
+    getAll()
     .then(response => {
-      setPersons(response.data)
+      setPersons(response)
     })
   }, [])
 
   const handleEvents = (e) => {
     const { name, value } = e.target;
-    console.log(name, value)
+
     if (name === "name") {
       setNewName(value);
     } else if (name === "number") {
@@ -37,8 +32,8 @@ const App = () => {
       if (isRepeat) {
         alert("This name has already been saved. If you need to repeat a name, change it slightly to submit.");
       } else {
-        axios
-        .post('http://localhost:3001/persons', { name: newName, number: newNumber })
+        const newAdd = { name: newName, number: newNumber }
+        createPerson(newAdd)
         .then(response => {
           console.log(response)
         })
