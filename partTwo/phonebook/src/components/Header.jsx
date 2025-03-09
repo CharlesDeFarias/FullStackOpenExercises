@@ -1,7 +1,7 @@
 import Toolbar from "./Toolbar"
 
-
 const Header = ({ handler, filter, newName, newNumber }) => {
+
     return (
       <div>
         <h2>Phonebook</h2>
