@@ -6,7 +6,8 @@ const Phonebook = ({
     handler, 
     newName, 
     newNumber, 
-    newFilter
+    newFilter,
+    handleDelete
 }) => {
     console.log(persons)
 
@@ -17,7 +18,7 @@ const Phonebook = ({
   return (
     <div>
       <Header handler={handler} filter={newFilter} newName={newName} newNumber={newNumber} />
-      <ContactList persons={filteredPersons} />
+      <ContactList persons={filteredPersons} handleDelete={handleDelete} />
     </div>
   );
 };

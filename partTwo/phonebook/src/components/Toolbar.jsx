@@ -10,7 +10,7 @@ const Toolbar = ({ handler, filter, newName, newNumber }) => {
             Number: <input name="number" value={newNumber} onChange={handler} />
           </div>
           <div>
-            <button type="submit">Add</button>
+            <button type="submit" name="addPerson">Add</button>
           </div>
         </form>
       </div>

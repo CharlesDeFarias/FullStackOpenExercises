@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Phonebook from './components/Phonebook.jsx'
-import { getAll, createPerson } from './services/persons.js'
+import { getAll, createPerson, deletePerson } from './services/persons.js'
 
 const App = () => {
   
@@ -8,13 +8,15 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [newFilter, setNewFilter] = useState('');
   const [persons, setPersons] = useState([ ]) 
+  const [refresh, setRefresh] = useState(false)
+  
 
   useEffect(() => {
     getAll()
     .then(response => {
       setPersons(response)
     })
-  }, [])
+  }, [refresh])
 
   const handleEvents = (e) => {
     const { name, value } = e.target;
@@ -33,6 +35,7 @@ const App = () => {
         alert("This name has already been saved. If you need to repeat a name, change it slightly to submit.");
       } else {
         const newAdd = { name: newName, number: newNumber }
+
         createPerson(newAdd)
         .then(response => {
           console.log(response)
@@ -43,7 +46,12 @@ const App = () => {
     }
   };
 
-  
+    const handleDelete = (e) => {
+      const ID = e.target.name
+      deletePerson(ID)
+      setRefresh(!refresh)
+  }
+
   return (
     <div>
       <Phonebook 
@@ -51,7 +59,8 @@ const App = () => {
       handler={handleEvents} 
       newName={newName} 
       newNumber={newNumber} 
-      newFilter={newFilter} />
+      newFilter={newFilter}
+      handleDelete={handleDelete} />
     </div>
   )
 }
