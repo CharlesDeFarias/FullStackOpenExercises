@@ -51,9 +51,9 @@ const App = () => {
               setMessage(`Error updating person. Error: ${error}`)
               setStatus(400)
               setTimeout(() => {
-                setMessage("", null)
+                setMessage("")
+                setStatus(null)
               }, 5000)
-              setMessage("")
             });
         }
       } else {
@@ -67,13 +67,16 @@ const App = () => {
             setNewName('');
             setNewNumber('');
             setTimeout(() => {
-              setMessage("", null)
+              setMessage("")
+              setStatus(null)
             }, 5000)
           })
           .catch(error => {
             setMessage(`Error adding person.`)
+            setStatus(400)
             setTimeout(() => {
-              setMessage("", null)
+              setMessage("")
+              setStatus(null)
             }, 5000)
           })
       }
@@ -85,6 +88,14 @@ const App = () => {
       const message = "Are you sure you want to delete this contact?"
       if(window.confirm(message)){
         deletePerson(ID)
+        .catch(error => {
+          setMessage(`Error adding person.`)
+          setStatus(400)
+          setTimeout(() => {
+            setMessage("")
+            setStatus(null)
+          }, 5000)
+        })
         setPersons(prev => prev.filter(person => person.id !== ID));
       }
     }
