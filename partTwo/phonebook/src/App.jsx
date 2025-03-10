@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import Phonebook from './components/Phonebook.jsx'
 import { getAll, createPerson, updatePerson, deletePerson } from './services/persons.js'
+import './index.css'
+import Notification from './components/error.jsx'
 
 const App = () => {
   
@@ -8,6 +10,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [newFilter, setNewFilter] = useState('');
   const [persons, setPersons] = useState([ ])   
+  const [message, setMessage] = useState("")
+  const [status, setStatus ] = useState(null)   
 
   useEffect(() => {
     getAll()
@@ -38,26 +42,43 @@ const App = () => {
               setPersons(persons.map(person => 
                 person.id === existingPerson.id ? response : person
               ));
+              setMessage(`${newName} updated succesfully.`)
+              setStatus(200)
               setNewName('');
               setNewNumber('');
             })
             .catch(error => {
-              console.error("Error updating person:", error);
+              setMessage(`Error updating person. Error: ${error}`)
+              setStatus(400)
+              setTimeout(() => {
+                setMessage("", null)
+              }, 5000)
+              setMessage("")
             });
         }
       } else {
         const newAdd = { name: newName, number: newNumber };
-  
+        
         createPerson(newAdd)
           .then(response => {
             setPersons(prev => [...prev, response]);
+            setMessage(`${newName} added succesfully.`)
+            setStatus(200)
             setNewName('');
             setNewNumber('');
+            setTimeout(() => {
+              setMessage("", null)
+            }, 5000)
           })
-          .catch(error => console.error("Error adding contact:", error));
+          .catch(error => {
+            setMessage(`Error adding person.`)
+            setTimeout(() => {
+              setMessage("", null)
+            }, 5000)
+          })
       }
-    }
   };
+}
 
     const handleDelete = (e) => {
       const ID = e.target.name
@@ -66,10 +87,11 @@ const App = () => {
         deletePerson(ID)
         setPersons(prev => prev.filter(person => person.id !== ID));
       }
-  }
+    }
 
   return (
     <div>
+      <Notification msg={message} status={status} />
       <Phonebook 
       persons={persons} 
       handler={handleEvents} 
