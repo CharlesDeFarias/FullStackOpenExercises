@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
+
 const persons = {
     "persons": [
       {
@@ -39,6 +41,33 @@ const persons = {
     response.json(persons)
   })
   
+  app.post('/api/persons', (request, response) => {
+    const person = request.body
+    const name = person.name
+    const number = person.number
+    const nameExists = persons.persons.find(contact => contact.name === name)
+    const nameMissing = name !== null && name !== ""
+    const numberMissing = number !== null && number !== ""
+    const canPost = !nameExists && nameMissing && numberMissing
+    console.log(nameExists,numberMissing,nameMissing,canPost)
+    console.log(name,number)
+    console.log(persons.persons)
+    console.log(nameExists)
+
+    const errorMessage = !nameExists ? "Somebody with this name already exists." : "Either the name or number are missing/empty."
+    if(canPost){
+        const newId = Math.floor(Math.random()*1000)
+        person.id = String(newId)
+        persons.persons = [...persons.persons, person];
+        console.log(person)
+        response.json(person)
+    }else{
+        response.status(404).json({ 
+            error: errorMessage
+        })
+    }   
+  })
+
   app.get('/api/persons/:id', (request, response) => {
     const id = request.params.id
     const person = persons.persons.find(person => person.id === id)
