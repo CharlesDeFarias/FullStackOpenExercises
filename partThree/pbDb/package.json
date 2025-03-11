@@ -1,0 +1,15 @@
+{
+  "name": "phonebookdb",
+  "version": "1.0.0",
+  "description": "Phonebook app database server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Charles De Farias",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
