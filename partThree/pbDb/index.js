@@ -22,6 +22,11 @@ const persons = {
         "name": "Mary Poppendieck",
         "number": "39-23-6423122",
         "id": "4"
+      },
+      {
+        "name": "test",
+        "number": "39-23-6423122",
+        "id": "8"
       }
     ]
   }
@@ -39,6 +44,17 @@ const persons = {
     const person = persons.persons.find(person => person.id === id)
     if (person) {
         response.json(person)
+      } else {
+        response.status(404).end()
+      }
+  })
+
+  app.delete('/api/persons/:id', (request, response) => {
+    const id = request.params.id
+    const person = persons.persons.find(person => person.id === id)
+    persons.persons= persons.persons.map(person => person.id !== id)
+    if (person) {
+        response.json(`${person.name} has been deleted`)
       } else {
         response.status(404).end()
       }
