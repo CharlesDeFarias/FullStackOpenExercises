@@ -1,7 +1,11 @@
 const express = require('express')
 const app = express()
-
+const morgan = require('morgan')
 app.use(express.json())
+
+morgan.token('body', function (req, res) { return JSON.stringify(req.body) })
+app.use(morgan('tiny'))
+app.use(morgan(':body'))
 
 const persons = {
     "persons": [
@@ -49,17 +53,12 @@ const persons = {
     const nameMissing = name !== null && name !== ""
     const numberMissing = number !== null && number !== ""
     const canPost = !nameExists && nameMissing && numberMissing
-    console.log(nameExists,numberMissing,nameMissing,canPost)
-    console.log(name,number)
-    console.log(persons.persons)
-    console.log(nameExists)
 
-    const errorMessage = !nameExists ? "Somebody with this name already exists." : "Either the name or number are missing/empty."
+    const errorMessage = nameExists ? "Somebody with this name already exists." : "Either the name or number are missing/empty."
     if(canPost){
         const newId = Math.floor(Math.random()*1000)
         person.id = String(newId)
         persons.persons = [...persons.persons, person];
-        console.log(person)
         response.json(person)
     }else{
         response.status(404).json({ 
