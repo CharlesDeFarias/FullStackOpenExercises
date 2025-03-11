@@ -1,4 +1,3 @@
-const http = require('http')
 const express = require('express')
 const app = express()
 
@@ -33,6 +32,12 @@ const persons = {
   
   app.get('/api/persons', (request, response) => {
     response.json(persons)
+  })
+  
+  app.get('/info', (request, response) => {
+    const message = `Phonebook has info for ${persons.persons.length} people`
+    const time= Date.now()
+    response.send(`<h2>${message}</h2>, ${new Date(time)}`)
   })
   
 const PORT = 3001
