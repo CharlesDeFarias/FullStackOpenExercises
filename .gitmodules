@@ -1,3 +1,6 @@
 [submodule "partThree/partThree/phonebookBackend"]
 	path = partThree/partThree/phonebookBackend
 	url = https://github.com/CharlesDeFarias/phonebookBackend.git
+[submodule "partThree/exercises3_9plus/phonebookBackend"]
+	path = partThree/exercises3_9plus/phonebookBackend
+	url = https://github.com/CharlesDeFarias/phonebookBackend.git
